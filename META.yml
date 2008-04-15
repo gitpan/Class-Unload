@@ -1,20 +1,20 @@
---- 
-abstract: Unload a class
-author: 
-  - "Dagfinn Ilmari Manns\xC3\xA5ker <ilmari@ilmari.org>"
-build_requires: 
+---
+abstract: 'Unload a class'
+author:
+  - 'Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>'
+build_requires:
   Test::More: 0
 distribution_type: module
-generated_by: Module::Install version 0.68
+generated_by: 'Module::Install version 0.71'
 license: perl
-meta-spec: 
+meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
   version: 1.3
 name: Class-Unload
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
+requires:
   Class::Inspector: 0
-version: 0.01
+version: 0.02

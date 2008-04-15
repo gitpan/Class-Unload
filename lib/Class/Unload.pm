@@ -4,8 +4,9 @@ use warnings;
 use strict;
 no strict 'refs'; # we're fiddling with the symbol table
 
-use Carp;
 use Class::Inspector;
+
+=encoding utf8
 
 =head1 NAME
 
@@ -13,11 +14,11 @@ Class::Unload - Unload a class
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
@@ -49,6 +50,9 @@ sub unload {
 
     return unless Class::Inspector->loaded( $class );
 
+    # Flush inheritance caches
+    @{$class . '::ISA'} = ();
+
     my $symtab = $class.'::';
     # Delete all symbols except other namespaces
     for my $symbol (keys %$symtab) {
@@ -59,9 +63,9 @@ sub unload {
     # Delete the reference from the parent namespace if there are no
     # sub-namespaces.
     if (not keys %$symtab) {
-        my ($parent, $child) = $class =~ m/\A(?:([^\W\d]\w*)::)?(\w+)*\z/s;
-        $parent ||= 'main';
-        delete ${$parent.'::'}{$child.'::'};
+        my ($parent, $child) = $class =~ m/\A([^\W\d]\w*::)*(\w+)\z/s;
+        $parent ||= 'main::';
+        delete ${$parent}{$child.'::'};
     }
 
     delete $INC{ Class::Inspector->filename( $class ) };
@@ -112,6 +116,13 @@ L<http://cpanratings.perl.org/d/Class-Unload>
 =item * Search CPAN
 
 L<http://search.cpan.org/dist/Class-Unload>
+
+=item * Git reposiory
+
+L<http://git.ilmari.org/?p=Class-Unload.git>
+
+C<git://git.ilmari.org/Class-Unload.git>
+
 
 =back
 
