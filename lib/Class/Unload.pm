@@ -14,11 +14,11 @@ Class::Unload - Unload a class
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS
@@ -40,8 +40,7 @@ Unload a class
 =head2 unload $class
 
 Unloads the given class by clearing out its symbol table and removing it
-from %INC. If it has no sub-namespaces, also deletes the reference from
-the parent namespace.
+from %INC.
 
 =cut
 
@@ -60,15 +59,8 @@ sub unload {
         delete $symtab->{$symbol};
     }
     
-    # Delete the reference from the parent namespace if there are no
-    # sub-namespaces.
-    if (not keys %$symtab) {
-        my ($parent, $child) = $class =~ m/\A([^\W\d]\w*::)*(\w+)\z/s;
-        $parent ||= 'main::';
-        delete ${$parent}{$child.'::'};
-    }
-
-    delete $INC{ Class::Inspector->filename( $class ) };
+    my $inc_file = join( '/', split /(?:'|::)/, $class ) . '.pm';
+    delete $INC{ $inc_file };
     
     return 1;
 }
