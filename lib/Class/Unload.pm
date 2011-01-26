@@ -1,6 +1,6 @@
 package Class::Unload;
 BEGIN {
-  $Class::Unload::VERSION = '0.06';
+  $Class::Unload::VERSION = '0.07';
 }
 # ABSTRACT: Unload a class
 
@@ -22,7 +22,7 @@ sub unload {
     my $symtab = $class.'::';
     # Delete all symbols except other namespaces
     for my $symbol (keys %$symtab) {
-        next if substr($symbol, -2, 2) eq '::';
+        next if $symbol =~ /\A[^:]+::\z/;
         delete $symtab->{$symbol};
     }
     
@@ -44,7 +44,7 @@ Class::Unload - Unload a class
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -76,11 +76,11 @@ and pointers.
 
 =head1 AUTHOR
 
-  Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>;
+Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>;
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Dagfinn Ilmari Mannsåker.
+This software is copyright (c) 2011 by Dagfinn Ilmari Mannsåker.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
