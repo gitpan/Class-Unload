@@ -1,6 +1,6 @@
 package Class::Unload;
-BEGIN {
-  $Class::Unload::VERSION = '0.07';
+{
+  $Class::Unload::VERSION = '0.08';
 }
 # ABSTRACT: Unload a class
 
@@ -36,6 +36,7 @@ sub unload {
 1; # End of Class::Unload
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -44,7 +45,7 @@ Class::Unload - Unload a class
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -65,6 +66,8 @@ version 0.07
 Unloads the given class by clearing out its symbol table and removing it
 from %INC.
 
+=encoding UTF-8
+
 =head1 SEE ALSO
 
 L<Class::Inspector>
@@ -80,10 +83,9 @@ Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>;
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Dagfinn Ilmari Mannsåker.
+This software is copyright (c) 2013 by Dagfinn Ilmari Mannsåker.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
